@@ -7,14 +7,24 @@
 </head>
 <body>
 <div th:each="person:${people}">
-    <a th:href="@{/{id}(id=${person.getId()})}" th:text="${person.getName() +' '+ person.getLastName()+', '
-                                                    + person.getYears()}">user</a>
+
+    <a th:text="${person.getName() + ' ' + person.getLastName() + ', ' + person.getYears()}"></a>
+
+    <a th:href="@{/?action=edit&id={id}(id=${person.getId()})}">Edit</a>
+
+    <form th:action="@{/}" method="post" style="display:inline;">
+        <input type="hidden" name="action" value="delete"/>
+        <input type="hidden" name="id" th:value="${person.getId()}"/>
+        <input type="submit" value="Delete"
+               onclick="return confirm('Are you sure you want to delete this user?')"/>
+    </form>
+    <br/>
 </div>
 
 <br/>
 <hr/>
 
-<a href="/new">Create new person</a>
+<a th:href="@{/?action=new}">Create new person</a>
 
 </body>
 </html>
